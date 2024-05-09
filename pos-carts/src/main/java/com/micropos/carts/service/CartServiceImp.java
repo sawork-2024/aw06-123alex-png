@@ -10,7 +10,6 @@ import com.micropos.carts.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
-
 @Service
 public class CartServiceImp implements CartService {
 
@@ -39,8 +38,8 @@ public class CartServiceImp implements CartService {
             return -1.0;
         Cart realCart = cart.get();
         double sum = 0;
-        for(CartItem item: realCart.cartItems()){
-            sum += item.price()*item.quantity();
+        for(CartItem item: realCart.getCartItems()){
+            sum += item.getPrice()*item.getProductQuantity();
         }
         return sum;
     }
@@ -54,6 +53,9 @@ public class CartServiceImp implements CartService {
     @Override
     public Cart addEmptyCart(Cart cart) {
         // TODO Auto-generated method stub
+        for (CartItem item : cart.getCartItems()) {
+            item.setCart(cart);  // 确保每个 CartItem 都有正确的 Cart 引用
+        }
         return cartRepository.save(cart);
     }
 

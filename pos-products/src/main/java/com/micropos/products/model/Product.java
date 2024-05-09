@@ -1,27 +1,36 @@
 package com.micropos.products.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "Products")
 public class Product implements Serializable {
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(name = "name")
     private String name;
-    private int quantity;
+    @Column(name = "product_quantity")
+    private int productQuantity;
+    @Column(name = "price")
     private double price;
+    @Column(name = "image")
     private String image;
 
-    public Product(String id, String name, int quantity, double price, String image) {
-        this.id = id;
-        this.name = name;
-        this.quantity = quantity;
-        this.price = price;
-        this.image = image;
-    }
+//    public Product(String id, String name, int productQuantity, double price, String image) {
+//        this.id = id;
+//        this.name = name;
+//        this.productQuantity = productQuantity;
+//        this.price = price;
+//        this.image = image;
+//    }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -33,9 +42,9 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public int getQuantity() { return quantity; }
+    public int getProductQuantity() { return productQuantity; }
 
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public void setProductQuantity(int productQuantity) { this.productQuantity = productQuantity; }
 
     public double getPrice() {
         return price;

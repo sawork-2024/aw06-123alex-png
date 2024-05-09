@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class CounterService {
     @Autowired
@@ -26,21 +29,25 @@ public class CounterService {
         return total;
     }
 
-    public double checkout(CartDto cartDto) {
+    public double checkout(Integer cartId) {
         String url1 = "http://pos-carts/carts/{cartId}";
-        restTemplate.delete(url1, cartDto.getId());
+
 
 //        Cart cart = cartMapper.toCart(cartDto);
         String url2 = "http://pos-products/products/{productId}";
+        CartDto cartDto = restTemplate.getForObject(url1, CartDto.class, cartId);
         cartDto.getItems().forEach(cartItem -> {
             ProductDto productDto = cartItem.getProduct();
-            int quantity = productDto.getQuantity();
+            int quantity = productDto.getProductQuantity();
             int newQuantity = quantity - cartItem.getAmount();
             ObjectMapper objectMapper = new ObjectMapper();
             ObjectNode quantityJsonObject = objectMapper.createObjectNode();
             quantityJsonObject.put("quantity", newQuantity);
-            restTemplate.patchForObject(url2, quantityJsonObject, Object.class);
+            Map<String, Object> uriVariables = new HashMap<>();
+            uriVariables.put("productId", cartItem.getProduct().getId());
+            restTemplate.patchForObject(url2, quantityJsonObject, Object.class, uriVariables);
         });
+        restTemplate.delete(url1, cartId);
         return getTotal(cartDto);
     }
 }

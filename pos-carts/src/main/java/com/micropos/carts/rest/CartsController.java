@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("poscarts")
 public class CartsController implements CartsApi{
 
     private CartService cartService;
@@ -48,7 +47,7 @@ public class CartsController implements CartsApi{
         if(resCart==null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<>(cartDto,HttpStatus.OK);
+        return new ResponseEntity<>(cartMapper.toCartDto(resCart),HttpStatus.OK);
     }
 
     @Override

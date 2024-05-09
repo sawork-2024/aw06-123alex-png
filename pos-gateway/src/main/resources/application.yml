@@ -7,6 +7,25 @@ spring:
     gateway:
       locator:
         enabled: true  # 启用从服务发现获取路由
+      routes:
+        - id: pos-products
+          uri: lb://pos-products
+          predicates:
+            - Path=/pos-products/**
+          filters:
+            - StripPrefix=1
+        - id: pos-carts
+          uri: lb://pos-carts
+          predicates:
+            - Path=/pos-carts/**
+          filters:
+            - StripPrefix=1
+        - id: pos-counter
+          uri: lb://pos-counter
+          predicates:
+            - Path=/pos-counter/**
+          filters:
+            - StripPrefix=1
 
     # thymeleaf:
   #   cache: false             # Allow Thymeleaf templates to be reloaded at runtime

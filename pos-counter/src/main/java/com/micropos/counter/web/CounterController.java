@@ -18,9 +18,9 @@ public class CounterController implements CounterApi {
     }
 
     @Override
-    public ResponseEntity<Double> checkout(CartDto cartDto) {
+    public ResponseEntity<Double> checkout(Integer cartId) {
 
-        return ResponseEntity.ok(this.counterService.checkout(cartDto));
+        return ResponseEntity.ok(this.counterService.checkout(cartId));
     }
 
 }

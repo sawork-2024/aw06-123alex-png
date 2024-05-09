@@ -5,7 +5,7 @@ info:
   license:
     name: MIT
 servers:
-  - url: http://localhost:8761/api
+  - url: http://localhost:8888/api
 paths:
   /carts:
     get:
@@ -208,7 +208,7 @@ paths:
           required: true
           description: The id of the product to retrieve
           schema:
-            type: string
+            type: integer
       responses:
         '200':
           description: Expected response to a valid request
@@ -233,7 +233,7 @@ paths:
           required: true
           description: The ID of the product
           schema:
-            type: string
+            type: integer
       requestBody:
         required: true
         content:
@@ -251,19 +251,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-  /counter/checkout:
+  /counter/checkout/{cartId}:
     post:
       summary: checkout a cart
       operationId: checkout
       tags:
         - counter
-      requestBody:
-        description: The cart to checkout.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Cart'
-        required: true
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: The id of the cart
+          schema:
+            type: integer
       responses:
         '200':
           description: Expected response to a valid request
@@ -290,6 +290,8 @@ components:
         id:
           type: integer
           format: int32
+        cartId:
+          type: integer
         amount:
           type: integer
           format: int32
@@ -313,13 +315,13 @@ components:
         - price
       properties:
         id:
-          type: string
+          type: integer
         name:
           type: string
         price:
           type: number
           format: double
-        quantity:
+        productQuantity:
           type: integer
         image:
           type: string
