@@ -38,3 +38,14 @@
 我在products中尝试了断路器，如果没有查到对应id的商品，则会输出一个默认的商品。
 
 # 系统演示
+### 添加购物车
+![img_1.png](img_1.png)
+### 数据库更新
+![img_2.png](img_2.png)
+![img_3.png](img_3.png)
+### 结算
+![img_4.png](img_4.png)
+数据库中的购物车(id=6)被删除：
+![img_5.png](img_5.png)
+数据库中的商品库存更新(123变为118)：
+![img_6.png](img_6.png)
